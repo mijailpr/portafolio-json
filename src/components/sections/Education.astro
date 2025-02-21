@@ -1,0 +1,92 @@
+---
+import Section from "../Section.astro";
+
+import { education } from "@cv";
+---
+
+<Section title="Educación">
+  <ul>
+    {
+      education.map(({ institution, url, startDate, endDate, area }) => {
+        const startYear = new Date(startDate).getFullYear();
+        const endYear =
+          endDate != null ? new Date(endDate).getFullYear() : "Actual";
+        const years = `${startYear} - ${endYear}`;
+
+        return (
+          <li>
+            <article>
+              <header>
+                <div>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="institution-link"
+                  >
+                    <h3>
+                      {institution} <span class="link-icon">🔗</span>
+                    </h3>
+                  </a>
+                </div>
+
+                <time>{years}</time>
+              </header>
+
+              <footer>
+                <p>{area}</p>
+              </footer>
+            </article>
+          </li>
+        );
+      })
+    }
+  </ul>
+</Section>
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  article h3 {
+    font-weight: 500;
+    color: #111;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  time {
+    color: #555;
+    font-size: 0.85rem;
+    min-width: 102px;
+  }
+
+  @media (width <= 700px) {
+    time {
+      text-align: right;
+    }
+  }
+
+  .institution-link {
+    text-decoration: none;
+    color: #4a4a4a; /* Color gris profesional */
+    font-weight: bold;
+  }
+
+  .institution-link:hover {
+    text-decoration: underline;
+  }
+
+  .link-icon {
+    font-size: 0.8em;
+    margin-left: 5px;
+  }
+</style>
